@@ -107,7 +107,7 @@ extern "C" void __stdcall init_emu_environ()
   LPTSTR lpszVariable;
   LPTCH lpvEnv = NULL;
   lpvEnv = GetEnvironmentStrings();
-  if (lpvEnv != NULL)
+  if (lpvEnv)
   {
     lpszVariable = (LPTSTR) lpvEnv;
     while (*lpszVariable)
@@ -405,7 +405,8 @@ extern "C"
   char *dll_fullpath(char *absPath, const char *relPath, size_t maxLength)
   {
     unsigned int len = strlen(relPath);
-    if (len > maxLength && absPath != NULL) return NULL;
+    if (len > maxLength && absPath)
+      return NULL;
 
     // dll has to make sure it uses the correct path for now
     if (len > 1 && relPath[1] == ':')
@@ -556,7 +557,7 @@ extern "C"
   int dll_read(int fd, void* buffer, unsigned int uiSize)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       errno = 0;
       const ssize_t ret = pFile->Read(buffer, uiSize);
@@ -587,7 +588,7 @@ extern "C"
   int dll_write(int fd, const void* buffer, unsigned int uiSize)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       errno = 0;
       const ssize_t ret = pFile->Write(buffer, uiSize);
@@ -619,7 +620,7 @@ extern "C"
   int dll_fstat64(int fd, struct __stat64 *buf)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
       return pFile->Stat(buf);
     else if (IS_STD_DESCRIPTOR(fd))
 #if defined(TARGET_WINDOWS)
@@ -634,7 +635,7 @@ extern "C"
   int dll_close(int fd)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       g_emuFileWrapper.UnRegisterFileObjectByDescriptor(fd);
 
@@ -655,7 +656,7 @@ extern "C"
   __off64_t dll_lseeki64(int fd, __off64_t lPos, int iWhence)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       lPos = pFile->Seek(lPos, iWhence);
       return lPos;
@@ -1051,7 +1052,7 @@ extern "C"
   char* dll_fgets(char* pszString, int num ,FILE * stream)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
       if (pFile->GetPosition() < pFile->GetLength())
       {
@@ -1070,7 +1071,7 @@ extern "C"
   int dll_feof(FILE * stream)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
       if (pFile->GetPosition() < pFile->GetLength()) return 0;
       else return 1;
@@ -1085,7 +1086,7 @@ extern "C"
       return 0;
 
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
       size_t read = 0;
       const size_t bufSize = size * count;
@@ -1279,7 +1280,7 @@ extern "C"
   off64_t dll_ftell64(FILE *stream)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
        return (off64_t)pFile->GetPosition();
     }
@@ -1290,7 +1291,7 @@ extern "C"
   long dll_tell(int fd)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
        return (long)pFile->GetPosition();
     }
@@ -1311,7 +1312,7 @@ extern "C"
   long long dll_telli64(int fd)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
        return static_cast<long long>(pFile->GetPosition());
     }
@@ -1355,7 +1356,7 @@ extern "C"
     else
     {
       CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-      if (pFile != NULL)
+      if (pFile)
       {
         size_t written = 0;
         const size_t bufSize = size * count;
@@ -1376,7 +1377,7 @@ extern "C"
   int dll_fflush(FILE* stream)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
       pFile->Flush();
       return 0;
@@ -1389,7 +1390,7 @@ extern "C"
   int dll_ferror(FILE* stream)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
       // unimplemented
       return 0;
@@ -1425,7 +1426,7 @@ extern "C"
     else
     {
       CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-      if (pFile != NULL)
+      if (pFile)
       {
         int len = strlen(tmp);
         // replace all '\n' occurences with '\r\n'...
@@ -1494,7 +1495,7 @@ extern "C"
   int dll_fgetpos64(FILE *stream, fpos64_t *pos)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByStream(stream);
-    if (pFile != NULL)
+    if (pFile)
     {
 #if !defined(TARGET_POSIX) || defined(TARGET_DARWIN) || defined(TARGET_FREEBSD) || defined(TARGET_ANDROID)
       *pos = pFile->GetPosition();
@@ -1684,7 +1685,7 @@ extern "C"
   int dll_fstat(int fd, struct stat* buffer)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       struct __stat64 tStat;
       if (pFile->Stat(&tStat) == 0)
@@ -1706,7 +1707,7 @@ extern "C"
   int dll_fstati64(int fd, struct _stati64 *buffer)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       CLog::Log(LOGINFO, "Stating open file");
 
@@ -1736,7 +1737,7 @@ extern "C"
   int dll_fstat64i32(int fd, struct _stat64i32 *buffer)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       struct __stat64 tStat = {};
       if (pFile->Stat(&tStat) == 0)
@@ -1811,11 +1812,11 @@ extern "C"
   {
     bool added = false;
 
-    if (envstring != NULL)
+    if (envstring)
     {
       const char *value_start = strchr(envstring, '=');
 
-      if (value_start != NULL)
+      if (value_start)
       {
         char var[64];
         int size = strlen(envstring) + 1;
@@ -1844,7 +1845,7 @@ extern "C"
           char** free_position = NULL;
           for (int i = 0; i < EMU_MAX_ENVIRONMENT_ITEMS && free_position == NULL; i++)
           {
-            if (dll__environ[i] != NULL)
+            if (dll__environ[i])
             {
               // we only support overwriting the old values
               if (StringUtils::CompareNoCase(dll__environ[i], var, strlen(var)) == 0)
@@ -1861,7 +1862,7 @@ extern "C"
             }
           }
 
-          if (free_position != NULL)
+          if (free_position)
           {
             // free position, copy value
             size = strlen(var) + strlen(value) + 2;
@@ -1907,7 +1908,7 @@ extern "C"
       }
     }
 
-    if (value != NULL)
+    if (value)
     {
       return value;
     }
@@ -1945,7 +1946,7 @@ extern "C"
   int dll__commit(int fd)
   {
     CFile* pFile = g_emuFileWrapper.GetFileXbmcByDescriptor(fd);
-    if (pFile != NULL)
+    if (pFile)
     {
       pFile->Flush();
       return 0;

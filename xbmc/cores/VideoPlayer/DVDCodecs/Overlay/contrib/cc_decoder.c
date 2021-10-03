@@ -457,7 +457,7 @@ void ccmem_tobuf(cc_decoder_t *dec)
       for (j = f; j <= l; j++)
       {
         char* chbytes = get_char_override(buf->rows[i].cells[j].charset, buf->rows[i].cells[j].c);
-        if (chbytes != NULL)
+        if (chbytes)
         {
           for (; *chbytes != '\0'; chbytes++)
           {

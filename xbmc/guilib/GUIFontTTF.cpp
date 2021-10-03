@@ -338,7 +338,7 @@ bool CGUIFontTTF::Load(
 
 void CGUIFontTTF::Begin()
 {
-  if (m_nestedBeginCount == 0 && m_texture != NULL && FirstBegin())
+  if (m_nestedBeginCount == 0 && m_texture && FirstBegin())
   {
     m_vertexTrans.clear();
     m_vertex.clear();

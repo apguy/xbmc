@@ -1046,7 +1046,7 @@ void CAddonInstallJob::ReportInstallError(const std::string& addonID, const std:
 
   std::string msg = message;
   EventPtr activity;
-  if (addon != NULL)
+  if (addon)
   {
     AddonPtr addon2;
     bool success =

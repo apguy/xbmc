@@ -301,7 +301,7 @@ CGUIControlBaseSetting::CGUIControlBaseSetting(int id,
 
 bool CGUIControlBaseSetting::IsEnabled() const
 {
-  return m_pSetting != NULL && m_pSetting->IsEnabled();
+  return m_pSetting && m_pSetting->IsEnabled();
 }
 
 void CGUIControlBaseSetting::UpdateFromControl()
@@ -1125,7 +1125,7 @@ bool CGUIControlButtonSetting::GetPath(const std::shared_ptr<CSettingPath>& path
     else
     {
       VECSOURCES* sources = CMediaSourceSettings::GetInstance().GetSources(source);
-      if (sources != NULL)
+      if (sources)
         shares.insert(shares.end(), sources->begin(), sources->end());
     }
   }
@@ -1443,7 +1443,7 @@ std::string CGUIControlSliderSetting::GetText(const std::shared_ptr<CSetting>& s
     return "";
 
   SettingControlSliderFormatter formatter = control->GetFormatter();
-  if (formatter != NULL)
+  if (formatter)
     return formatter(control, value, minimum, step, maximum);
 
   std::string formatString = control->GetFormatString();
