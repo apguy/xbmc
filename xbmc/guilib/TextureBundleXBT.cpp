@@ -218,7 +218,7 @@ bool CTextureBundleXBT::ConvertFrameToTexture(const std::string& name,
 {
   // found texture - allocate the necessary buffers
   unsigned char *buffer = new unsigned char [(size_t)frame.GetPackedSize()];
-  if (buffer == NULL)
+  if (!buffer)
   {
     CLog::Log(LOGERROR, "Out of memory loading texture: {} (need {} bytes)", name,
               frame.GetPackedSize());
@@ -237,7 +237,7 @@ bool CTextureBundleXBT::ConvertFrameToTexture(const std::string& name,
   if (frame.IsPacked())
   { // unpack
     unsigned char *unpacked = new unsigned char[(size_t)frame.GetUnpackedSize()];
-    if (unpacked == NULL)
+    if (!unpacked)
     {
       CLog::Log(LOGERROR, "Out of memory unpacking texture: {} (need {} bytes)", name,
                 frame.GetUnpackedSize());

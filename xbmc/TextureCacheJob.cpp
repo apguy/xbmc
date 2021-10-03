@@ -120,7 +120,7 @@ bool CTextureCacheJob::ResizeTexture(const std::string &url, uint8_t* &result, s
     return false;
 
   CTexture* texture = LoadImage(image, width, height, additional_info, true);
-  if (texture == NULL)
+  if (!texture)
     return false;
 
   bool success = CPicture::ResizeTexture(image, texture, width, height, result, result_size, scalingAlgorithm);

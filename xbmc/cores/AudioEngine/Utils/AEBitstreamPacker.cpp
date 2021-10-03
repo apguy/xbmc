@@ -231,7 +231,7 @@ void CAEBitstreamPacker::PackEAC3(CAEStreamInfo &info, uint8_t* data, int size)
   {
     /* multiple frames needed to achieve 6 blocks as required by IEC 61937-3:2007 */
 
-    if (m_eac3 == NULL)
+    if (!m_eac3)
       m_eac3 = new uint8_t[EAC3_MAX_BURST_PAYLOAD_SIZE];
 
     unsigned int newsize = m_eac3Size + size;

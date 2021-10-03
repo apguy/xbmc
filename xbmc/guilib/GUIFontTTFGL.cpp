@@ -330,7 +330,7 @@ CTexture* CGUIFontTTFGL::ReallocTexture(unsigned int& newHeight)
 
   CTexture* newTexture = CTexture::CreateTexture(m_textureWidth, newHeight, XB_FMT_A8);
 
-  if (!newTexture || newTexture->GetPixels() == NULL)
+  if (!newTexture || !newTexture->GetPixels())
   {
     CLog::Log(LOGERROR,
               "GUIFontTTFGL::CacheCharacter: Error creating new cache texture for size {:f}",

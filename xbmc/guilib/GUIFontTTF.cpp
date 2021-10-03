@@ -885,7 +885,7 @@ bool CGUIFontTTF::CacheCharacter(wchar_t letter, uint32_t style, Character* ch, 
 
         CTexture* newTexture = NULL;
         newTexture = ReallocTexture(newHeight);
-        if(newTexture == NULL)
+        if (!newTexture)
         {
           FT_Done_Glyph(glyph);
           CLog::Log(LOGDEBUG, "{}: Failed to allocate new texture of height {}", __FUNCTION__,
@@ -896,7 +896,7 @@ bool CGUIFontTTF::CacheCharacter(wchar_t letter, uint32_t style, Character* ch, 
       }
     }
 
-    if(m_texture == NULL)
+    if (!m_texture)
     {
       FT_Done_Glyph(glyph);
       CLog::Log(LOGDEBUG, "{}: no texture to cache character to", __FUNCTION__);
