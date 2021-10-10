@@ -276,7 +276,7 @@ bool JSONSchemaTypeDefinition::Parse(const CVariant &value, bool isParameter /* 
     std::string refType = value["$ref"].asString();
     // Check if the referenced type exists
     JSONSchemaTypeDefinitionPtr referencedTypeDef = CJSONServiceDescription::GetType(refType);
-    if (refType.length() <= 0 || !referencedTypeDef.get())
+    if (refType.length() <= 0 || !referencedTypeDef)
     {
       CLog::Log(LOGDEBUG, "JSONRPC: JSON schema type {} references an unknown type {}", name,
                 refType);
@@ -339,7 +339,7 @@ bool JSONSchemaTypeDefinition::Parse(const CVariant &value, bool isParameter /* 
       if (!extendsName.empty())
       {
         JSONSchemaTypeDefinitionPtr extendedTypeDef = CJSONServiceDescription::GetType(extendsName);
-        if (!extendedTypeDef.get())
+        if (!extendedTypeDef)
         {
           CLog::Log(LOGDEBUG, "JSONRPC: JSON schema type {} extends an unknown type {}", name,
                     extendsName);
@@ -360,7 +360,7 @@ bool JSONSchemaTypeDefinition::Parse(const CVariant &value, bool isParameter /* 
         if (!extendsName.empty())
         {
           JSONSchemaTypeDefinitionPtr extendedTypeDef = CJSONServiceDescription::GetType(extendsName);
-          if (!extendedTypeDef.get())
+          if (!extendedTypeDef)
           {
             extends.clear();
             CLog::Log(LOGDEBUG, "JSONRPC: JSON schema type {} extends an unknown type {}", name,

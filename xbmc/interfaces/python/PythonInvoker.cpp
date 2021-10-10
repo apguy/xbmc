@@ -650,7 +650,7 @@ void CPythonInvoker::onInitialization()
 
 void CPythonInvoker::onPythonModuleInitialization(void* moduleDict)
 {
-  if (!m_addon.get() || !moduleDict)
+  if (!m_addon || !moduleDict)
     return;
 
   PyObject* moduleDictionary = (PyObject*)moduleDict;
