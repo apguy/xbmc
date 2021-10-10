@@ -625,7 +625,7 @@ bool CAddonMgr::GetAddon(const std::string& str,
       if (runningAddon)
         addon = runningAddon;
     }
-    return addon.get() != nullptr;
+    return addon != nullptr;
   }
 
   return false;

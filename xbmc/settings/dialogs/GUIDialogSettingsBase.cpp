@@ -239,7 +239,7 @@ bool CGUIDialogSettingsBase::OnMessage(CGUIMessage& message)
           message.GetControlId() < (int)(CONTROL_SETTINGS_START_CONTROL + m_settingControls.size()))
       {
         BaseSettingControlPtr settingControl = GetSettingControl(message.GetControlId());
-        if (settingControl.get() && settingControl->GetSetting())
+        if (settingControl && settingControl->GetSetting())
         {
           settingControl->UpdateFromSetting(message.GetParam2() != 0);
           return true;

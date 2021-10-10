@@ -1228,7 +1228,7 @@ void JSONSchemaTypeDefinition::ResolveReference()
   if (!origDefaultValue.isNull())
     defaultValue = origDefaultValue;
 
-  if (referencedTypeDef.get())
+  if (referencedTypeDef)
     referencedType = referencedTypeDef;
 
   // This will have been overwritten by the copy of the reference
