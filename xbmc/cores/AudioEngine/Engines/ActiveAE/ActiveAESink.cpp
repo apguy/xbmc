@@ -936,7 +936,7 @@ unsigned int CActiveAESink::OutputSamples(CSampleBuffer* samples)
         m_packer->Reset();
         if (m_sinkFormat.m_streamInfo.m_type == CAEStreamInfo::STREAM_TYPE_TRUEHD)
         {
-          if (frames == 61440)
+          if (frames == 61440 / 2)
           {
             for (int i = 0, of = 0; i < 12; i++)
             {
@@ -992,7 +992,7 @@ unsigned int CActiveAESink::OutputSamples(CSampleBuffer* samples)
     }
     else
     {
-      if (m_sinkFormat.m_streamInfo.m_type == CAEStreamInfo::STREAM_TYPE_TRUEHD && frames == 61440)
+      if (m_sinkFormat.m_streamInfo.m_type == CAEStreamInfo::STREAM_TYPE_TRUEHD && frames == 61440 / 2)
       {
         unsigned int size = 0;
         mergebuffer.reset(new uint8_t[MAX_IEC61937_PACKET]);

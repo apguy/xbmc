@@ -194,12 +194,10 @@ bool CDVDAudioCodecPassthrough::AddData(const DemuxPacket &packet)
 
     m_trueHDframes++;
 
-    // Only 12 audio units are packed in the buffer to avoid overflows.
-    // Buffer of TRUEHD_BUF_SIZE in theory allows 24 units but at high bitrates
-    // causes discontinuities due some unknown memory corruption
+    // Only 12 audio units are packed in the buffer to avoid overflows and reduce latency
     if (m_trueHDframes == 12)
     {
-      m_dataSize = TRUEHD_BUF_SIZE;
+      m_dataSize = TRUEHD_BUF_SIZE / 2;
       m_trueHDoffset = 0;
       m_trueHDframes = 0;
     }
